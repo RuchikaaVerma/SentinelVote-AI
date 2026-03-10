@@ -1,0 +1,10 @@
+POST http://127.0.0.1:5000/login
+Content-Type: application/json
+
+{
+  "email": "2k23.psitaiml2314065@gmail.com",
+  "password": "2428",
+  "holdTimes": [120, 110, 130],
+  "keyIntervals": [300, 250, 270],
+  "mouseSpeeds": [0.5, 0.7, 0.6]
+}

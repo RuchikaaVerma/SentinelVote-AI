@@ -1,0 +1,12 @@
+flask
+flask-pymongo
+bcrypt
+python-dotenv
+numpy
+scikit-learn
+cryptography
+face_recognition
+opencv-python
+cmake
+pywebauthn
+hashlib

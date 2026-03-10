@@ -1,0 +1,7 @@
+venv/
+.env
+*.pyc
+__pycache__/
+static/face_encodings/*.npy
+*.egg-info/
+.DS_Store
