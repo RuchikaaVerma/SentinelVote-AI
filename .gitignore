@@ -1,7 +1,8 @@
 venv/
 .env
-*.pyc
 __pycache__/
+*.pyc
+*.pyo
 static/face_encodings/*.npy
 *.egg-info/
 .DS_Store
