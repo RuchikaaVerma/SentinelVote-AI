@@ -7,5 +7,4 @@ scikit-learn
 cryptography
 face_recognition
 opencv-python
-cmake
-pywebauthn
+dlib-bin
