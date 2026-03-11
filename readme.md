@@ -966,60 +966,7 @@ Import `docs/postman_collection.json` for pre-configured API tests.
 - [ ] Configure CORS properly
 - [ ] Set up backup strategy
 
-### Deployment Options
-
-#### **Option 1: Heroku**
-
-```bash
-# Install Heroku CLI
-heroku login
-heroku create sentinelvote-ai
-heroku addons:create mongolab:sandbox
-git push heroku main
-heroku open
-```
-
-#### **Option 2: AWS EC2**
-
-1. Launch Ubuntu 20.04 instance
-2. SSH into instance
-3. Install dependencies:
-   ```bash
-   sudo apt update
-   sudo apt install python3-pip python3-venv nginx mongodb
-   ```
-4. Clone repo and setup as above
-5. Configure Gunicorn + Nginx
-6. Setup SSL with Let's Encrypt
-
-#### **Option 3: Docker**
-
-```dockerfile
-# Dockerfile
-FROM python:3.9-slim
-WORKDIR /app
-COPY requirements.txt .
-RUN pip install -r requirements.txt
-COPY . .
-CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:5000", "run:app"]
-```
-
-```bash
-docker build -t sentinelvote-ai .
-docker run -p 5000:5000 sentinelvote-ai
-```
-
-#### **Option 4: Vercel (Frontend) + MongoDB Atlas (Backend)**
-
-1. Deploy Flask API separately
-2. Host static frontend on Vercel
-3. Configure CORS for cross-origin requests
-
----
-
 ## 🤝 Contributing
-
-We welcome contributions! Please see [CONTRIBUTING.md](docs/CONTRIBUTING.md) for guidelines.
 
 ### How to Contribute
 
@@ -1069,36 +1016,17 @@ in the Software without restriction...
 
 | Name | Role | GitHub | LinkedIn |
 |------|------|--------|----------|
-| **Your Name** | Full Stack + AI/ML | [@yourusername](https://github.com/yourusername) | [Profile](https://linkedin.com/in/you) |
-| **Team Member 2** | Backend + Security | [@member2](https://github.com/member2) | [Profile](https://linkedin.com/in/member2) |
-| **Team Member 3** | Frontend + UI/UX | [@member3](https://github.com/member3) | [Profile](https://linkedin.com/in/member3) |
-
----
-
-
-### Competition Details
-
-**Event:** [Hackathon Name]  
-**Date:** December 15, 2024  
-**Category:** Smart Governance / Civic Tech  
-**Team:** SentinelVote AI
+| **Ruchika Verma** | Full Stack + AI/ML | [Profile](https://www.linkedin.com/in/ruchika-verma-888bb6309 ) |
+| **Divyanshi Singh** | Backend |[Profile](https://linkedin.com/in/member2) |
+| **Archana Agahari** | Frontend + UI/UX |[Profile](https://linkedin.com/in/member3) |
+| **Rashmi** |Security| [Profile](https://linkedin.com/in/member3) 
 
 ### Project Links
 
-- **Live Demo:** [https://sentinelvote-ai.herokuapp.com](https://sentinelvote-ai.herokuapp.com)
-- **GitHub Repo:** [https://github.com/yourusername/sentinelvote-ai](https://github.com/yourusername/sentinelvote-ai)
+- **GitHub Repo:** [https://github.com/RuchikaaVerma/SentinelVote-AI)
 - **Demo Video:** [YouTube Link](https://youtube.com/watch?v=demo)
 - **Pitch Deck:** [View Presentation](docs/SentinelVote_AI_Pitch.pdf)
 
-### Judging Criteria
-
-| Criteria | How We Address It |
-|----------|-------------------|
-| **Innovation** | First e-voting system combining face recognition + behavioral AI + blockchain |
-| **Impact** | Can secure elections for 1B+ voters globally |
-| **Technical** | 5-layer security, ML anomaly detection, real-time blockchain |
-| **Scalability** | Designed for national elections, tested with 1000+ concurrent users |
-| **Presentation** | Professional pitch deck, live demo, comprehensive documentation |
 
 ### What Makes Us Different
 
@@ -1119,58 +1047,28 @@ in the Software without restriction...
 - ✅ **98.5% face recognition accuracy**
 - ✅ **< 2 second** vote processing time
 
----
-
-## 📞 Contact & Support
-
-### Get in Touch
-
-- **Email:** support@sentinelvote.ai
-- **Twitter:** [@SentinelVoteAI](https://twitter.com/sentinelvoteai)
-- **Discord:** [Join our community](https://discord.gg/sentinelvote)
-- **Issues:** [GitHub Issues](https://github.com/yourusername/sentinelvote-ai/issues)
-
-### Documentation
-
-- **API Docs:** [docs/API.md](docs/API.md)
-- **Architecture:** [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)
-- **Security Audit:** [docs/SECURITY.md](docs/SECURITY.md)
-- **Contributing:** [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md)
-
----
-
-## 🙏 Acknowledgments
-
-- **dlib** team for face recognition library
-- **scikit-learn** for ML algorithms
-- **MongoDB** for database solution
-- **Flask** community for web framework
-- **Chart.js** for beautiful visualizations
-- All open-source contributors
-
----
 
 ## 🚀 Future Roadmap
 
-### Phase 1 (Q1 2025)
+### Phase 1
 - [ ] WebAuthn integration (passwordless login)
 - [ ] Mobile app (iOS + Android)
 - [ ] Multi-language support (10 languages)
 - [ ] Accessibility features (WCAG 2.1 AA)
 
-### Phase 2 (Q2 2025)
+### Phase 2
 - [ ] WebSocket real-time updates
 - [ ] Advanced analytics dashboard
 - [ ] Voter registration API for government integration
 - [ ] Load testing for 1M+ concurrent users
 
-### Phase 3 (Q3 2025)
+### Phase 3
 - [ ] Distributed blockchain network
 - [ ] Smart contracts for vote validation
 - [ ] Integration with national ID systems
 - [ ] Pilot deployment in local government
 
-### Phase 4 (Q4 2025)
+### Phase 4 
 - [ ] National-level deployment
 - [ ] Third-party security audit
 - [ ] Compliance certifications (ISO 27001)
@@ -1178,11 +1076,6 @@ in the Software without restriction...
 
 ---
 
-## ⭐ Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=yourusername/sentinelvote-ai&type=Date)](https://star-history.com/#yourusername/sentinelvote-ai&Date)
-
----
 
 ## 📈 Statistics
 
