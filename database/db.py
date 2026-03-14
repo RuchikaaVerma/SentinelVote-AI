@@ -1,12 +1,22 @@
 from flask_pymongo import PyMongo
+from pymongo import MongoClient
+import os
 
 mongo = PyMongo()
 
 def init_db(app):
-    mongo.init_app(app)
+    uri = os.getenv("MONGO_URI")
     
-    # Force database name from env
-    import os
+    # Direct MongoClient with SSL fix
+    client = MongoClient(
+        uri,
+        tls=True,
+        tlsAllowInvalidCertificates=True
+    )
+    
     db_name = os.getenv("DB_NAME", "sentinelvoteai_production")
-    mongo.db = mongo.cx[db_name]
+    app.db = client[db_name]
     
+    # Also init PyMongo for compatibility
+    mongo.init_app(app)
+    mongo.db = client[db_name]
