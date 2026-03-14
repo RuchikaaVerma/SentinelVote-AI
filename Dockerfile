@@ -5,6 +5,8 @@ RUN apt-get update && apt-get install -y \
     libopenblas-dev liblapack-dev \
     libx11-dev libgtk-3-dev \
     libssl-dev libffi-dev \
+    ca-certificates \
+    && update-ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
