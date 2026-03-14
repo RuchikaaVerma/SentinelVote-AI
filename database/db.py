@@ -1,22 +1,19 @@
-from flask_pymongo import PyMongo
 from pymongo import MongoClient
 import os
 
-mongo = PyMongo()
+class MongoDB:
+    db = None
+
+mongo = MongoDB()
 
 def init_db(app):
-    uri = os.getenv("MONGO_URI")
-    
-    # Direct MongoClient with SSL fix
-    client = MongoClient(
-        uri,
-        tls=True,
-        tlsAllowInvalidCertificates=True
-    )
-    
+    uri = os.getenv("MONGO_URI", "mongodb://localhost:27017/sentinelvoteai_production")
     db_name = os.getenv("DB_NAME", "sentinelvoteai_production")
-    app.db = client[db_name]
     
-    # Also init PyMongo for compatibility
-    mongo.init_app(app)
+    # Use TLS only for Atlas (cloud), not for localhost
+    if "mongodb+srv" in uri:
+        client = MongoClient(uri, tlsAllowInvalidCertificates=True)
+    else:
+        client = MongoClient(uri)
+    
     mongo.db = client[db_name]
