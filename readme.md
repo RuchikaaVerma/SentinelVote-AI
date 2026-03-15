@@ -6,7 +6,6 @@
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![Flask](https://img.shields.io/badge/Flask-2.3.0-green.svg)](https://flask.palletsprojects.com/)
 [![MongoDB](https://img.shields.io/badge/MongoDB-6.0-green.svg)](https://www.mongodb.com/)
-[![Hackathon Ready](https://img.shields.io/badge/Hackathon-Ready-orange.svg)](/)
 
 > **What if digital elections could be more secure than physical ones?**
 
@@ -27,14 +26,9 @@ SentinelVote AI is a next-generation electronic voting platform that combines **
 - [🚀 Getting Started](#-getting-started)
 - [📸 User Journey](#-user-journey)
 - [🔬 How It Works](#-how-it-works)
-- [📊 Demo Credentials](#-demo-credentials)
-- [🎥 Screenshots](#-screenshots)
 - [🧪 Testing](#-testing)
-- [🌐 Deployment](#-deployment)
 - [🤝 Contributing](#-contributing)
-- [📜 License](#-license)
 - [👥 Team](#-team)
-- [🏆 Hackathon Submission](#-hackathon-submission)
 
 ---
 
@@ -170,7 +164,7 @@ User Action → Login → Face Capture → Behavioral Analysis → Risk Score
 
 ### Layer 2: Face Recognition
 - **Technology:** dlib + face_recognition library
-- **Process:** 
+- **Process:**
   1. Capture face during registration
   2. Extract 128-dimensional face encoding
   3. Compare at login (tolerance: 0.6)
@@ -190,7 +184,7 @@ User Action → Login → Face Capture → Behavioral Analysis → Risk Score
 ### Layer 4: Vote Lock
 - **Mechanism:** Database constraint + session check
 - **Protection:** Double voting prevention
-- **Verification:** 
+- **Verification:**
   ```python
   if db.votes.find_one({"user_id": user_id, "election_id": election_id}):
       return "Already voted"
@@ -263,44 +257,34 @@ User Action → Login → Face Capture → Behavioral Analysis → Risk Score
 ```
 SentinelVote-AI/
 │
-├── 📂 app/
-│   ├── __init__.py                 # Flask app initialization
-│   ├── app.py                      # Main application file
-│   │
-│   ├── 📂 routes/
-│   │   ├── __init__.py
-│   │   ├── auth.py                 # /register, /login, /logout
-│   │   ├── vote.py                 # /vote-page, /cast-vote
-│   │   ├── dashboard.py            # /dashboard
-│   │   └── results.py              # /results-page
-│   │
-│   ├── 📂 models/
-│   │   ├── __init__.py
-│   │   ├── user.py                 # User schema/operations
-│   │   ├── vote.py                 # Vote schema/operations
-│   │   └── audit.py                # Blockchain audit operations
-│   │
-│   ├── 📂 ml/
-│   │   ├── __init__.py
-│   │   ├── face_auth.py            # Face recognition logic
-│   │   ├── behavior_model.py       # Isolation Forest model
-│   │   └── train_model.py          # Model training script
-│   │
-│   ├── 📂 blockchain/
-│   │   ├── __init__.py
-│   │   ├── audit_chain.py          # Blockchain implementation
-│   │   └── hash_utils.py           # SHA-256 utilities
-│   │
-│   └── 📂 utils/
-│       ├── __init__.py
-│       ├── security.py             # Security helpers
-│       ├── validators.py           # Input validation
-│       └── db.py                   # Database connection
+├── app.py                          # Main application file
+├── config.py                       # App configuration
+├── run.py                          # Application entry point
+│
+├── 📂 routes/
+│   ├── auth_routes.py              # /register, /login, /logout
+│   ├── vote_routes.py              # /vote-page, /cast-vote
+│   └── admin_routes.py             # /dashboard, /results
+│
+├── 📂 models/
+│   ├── user_model.py               # User schema/operations
+│   ├── vote_model.py               # Vote schema/operations
+│   └── candidate_model.py          # Candidate schema/operations
+│
+├── 📂 ml/
+│   ├── face_auth.py                # Face recognition logic
+│   └── behavior_model.py           # Isolation Forest model
+│
+├── 📂 database/
+│   └── db.py                       # MongoDB connection
+│
+├── 📂 security/
+│   └── security.py                 # Security helpers
 │
 ├── 📂 templates/
 │   ├── register.html               # Voter registration
 │   ├── login.html                  # Login with face capture
-│   ├── dashboard.html              # User dashboard
+│   ├── dashboard.html              # Admin dashboard
 │   ├── vote.html                   # Voting interface
 │   ├── results.html                # Election results
 │   └── confirmation.html           # Vote confirmation
@@ -308,49 +292,27 @@ SentinelVote-AI/
 ├── 📂 static/
 │   ├── 📂 css/
 │   │   └── style.css               # Custom styles
-│   │
 │   ├── 📂 js/
 │   │   ├── behavior.js             # Behavioral tracking
 │   │   ├── face-capture.js         # Webcam integration
 │   │   └── charts.js               # Chart.js configs
-│   │
-│   ├── 📂 images/
-│   │   ├── logo.png
-│   │   └── candidates/             # Candidate photos
-│   │
-│   └── 📂 face_encodings/          # Stored face data
-│       └── [user_encodings].npy
+│   └── 📂 face_encodings/          # Stored face data (gitignored)
 │
-├── 📂 tests/
-│   ├── test_auth.py                # Authentication tests
-│   ├── test_vote.py                # Voting logic tests
-│   ├── test_blockchain.py          # Blockchain tests
-│   └── test_ml.py                  # ML model tests
-│
-├── 📂 data/
-│   ├── demo_users.json             # Demo user data
-│   ├── candidates.json             # Candidate information
-│   └── election_config.json        # Election settings
+├── 📂 scripts/
+│   └── seed_data.py                # Load demo candidates + admin user
 │
 ├── 📂 docs/
 │   ├── ARCHITECTURE.md             # System design
 │   ├── API.md                      # API documentation
-│   ├── SECURITY.md                 # Security audit
-│   └── CONTRIBUTING.md             # Contribution guide
-│
-├── 📂 scripts/
-│   ├── setup_db.py                 # Initialize MongoDB
-│   ├── seed_data.py                # Load demo data
-│   └── train_behavior_model.py     # Train ML model
+│   └── SECURITY.md                 # Security audit
 │
 ├── .env.example                    # Environment variables template
+├── .env                            # Local config (gitignored)
 ├── .gitignore                      # Git ignore rules
 ├── requirements.txt                # Python dependencies
-├── config.py                       # App configuration
-├── run.py                          # Application entry point
-├── README.md                       # This file
-└── LICENSE                         # MIT License
-
+├── Dockerfile                      # Docker container config
+├── docker-compose.yml              # Multi-service Docker setup
+└── README.md                       # This file
 ```
 
 ---
@@ -361,16 +323,16 @@ SentinelVote-AI/
 
 Ensure you have the following installed:
 
-- **Python** 3.8 or higher ([Download](https://www.python.org/downloads/))
-- **MongoDB** 6.0 or higher ([Download](https://www.mongodb.com/try/download/community))
+- **Python** 3.11 or higher ([Download](https://www.python.org/downloads/))
+- **MongoDB** 6.0 or higher — or use [MongoDB Atlas](https://www.mongodb.com/atlas) (recommended)
 - **Git** ([Download](https://git-scm.com/downloads))
-- **Webcam** (for face recognition testing)
+- **Webcam** (for face recognition)
 
 ### Step 1: Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/sentinelvote-ai.git
-cd sentinelvote-ai
+git clone https://github.com/RuchikaaVerma/SentinelVote-AI.git
+cd SentinelVote-AI
 ```
 
 ### Step 2: Create Virtual Environment
@@ -393,151 +355,105 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-**Note:** If `dlib` installation fails:
+> **Note:** If `dlib` installation fails, use the precompiled version:
+> ```bash
+> pip install dlib-bin
+> ```
 
-**Windows:**
-```bash
-# Install Visual C++ Build Tools first
-# Then install dlib-bin (precompiled version)
-pip install dlib-bin
-```
-
-**macOS:**
-```bash
-brew install cmake
-pip install dlib
-```
-
-**Linux (Ubuntu/Debian):**
-```bash
-sudo apt-get install build-essential cmake
-sudo apt-get install libopenblas-dev liblapack-dev
-sudo apt-get install libx11-dev libgtk-3-dev
-pip install dlib
-```
-
-### Step 4: Setup MongoDB
-
-**Start MongoDB Service:**
-
-**Windows:**
-```bash
-# MongoDB runs as Windows Service by default after installation
-# Check status in Services (services.msc)
-```
-
-**macOS:**
-```bash
-brew services start mongodb-community@6.0
-```
-
-**Linux:**
-```bash
-sudo systemctl start mongod
-sudo systemctl enable mongod  # Start on boot
-```
-
-**Verify MongoDB is running:**
-```bash
-mongosh
-# Should connect to mongodb://localhost:27017
-```
-
-### Step 5: Configure Environment Variables
-
-Create a `.env` file in the project root:
+### Step 4: Configure Environment Variables
 
 ```bash
 cp .env.example .env
 ```
 
-Edit `.env`:
+Edit `.env` with your values:
 
 ```env
-# Flask Configuration
-FLASK_APP=run.py
+FLASK_APP=app.py
 FLASK_ENV=development
-SECRET_KEY=your-super-secret-key-change-this-in-production
+SECRET_KEY=your-secret-key-here
 
-# MongoDB Configuration
-MONGO_URI=mongodb://localhost:27017/
-DB_NAME=sentinelvoteai
+MONGO_URI=mongodb+srv://username:password@cluster.mongodb.net/sentinelvoteai_production?retryWrites=true&w=majority&appName=Cluster0
+DB_NAME=sentinelvoteai_production
 
-# Security Settings
 BCRYPT_LOG_ROUNDS=12
 SESSION_TIMEOUT=3600
-
-# ML Model Settings
 FACE_TOLERANCE=0.6
 BEHAVIOR_THRESHOLD=0.3
 
-# Upload Settings
 UPLOAD_FOLDER=static/face_encodings
-MAX_FILE_SIZE=5242880  # 5MB
+MAX_FILE_SIZE=5242880
 ```
 
-### Step 6: Initialize Database
+### Step 5: Seed the Database
 
-```bash
-python scripts/setup_db.py
-```
-
-This creates:
-- Collections: `users`, `votes`, `audit_chain`, `sessions`
-- Indexes for performance
-- Demo election data
-
-### Step 7: Seed Demo Data (Optional)
+Run the seed script to create candidates and the admin user:
 
 ```bash
 python scripts/seed_data.py
 ```
 
-This adds:
-- 3 demo candidates
-- Sample election configuration
-- Test user accounts
+This creates:
+- 3 demo election candidates
+- 1 admin user account
 
-### Step 8: Train ML Model (Optional)
+> **Admin credentials are printed to terminal on first run.** Keep them secure.
+
+### Step 6: Run the App
 
 ```bash
-python scripts/train_behavior_model.py
+python app.py
 ```
 
-Trains the Isolation Forest model on sample behavioral data.
+Open your browser at:
+```
+http://localhost:5000
+```
+
+---
+
+## 🐳 Docker Deployment
+
+### Quick Start
+
+```bash
+# Build and run all services
+docker compose up --build
+
+# Run in background
+docker compose up -d --build
+```
+
+### Production Deployment (Railway / Oracle Cloud)
+
+1. Push your code to GitHub
+2. Connect repo to [Railway](https://railway.app)
+3. Add environment variables in Railway dashboard
+4. Railway auto-deploys from your Dockerfile
+
+**Required environment variables for production:**
+```
+FLASK_ENV=production
+SECRET_KEY=<strong-random-key>
+MONGO_URI=<your-atlas-uri>
+DB_NAME=sentinelvoteai_production
+FACE_TOLERANCE=0.6
+BEHAVIOR_THRESHOLD=0.3
+```
 
 ---
 
 ## 🚀 Getting Started
 
-### Start the Application
-
-```bash
-python run.py
-```
-
-Or using Flask CLI:
-
-```bash
-flask run
-```
-
-**Output:**
-```
- * Serving Flask app 'app'
- * Debug mode: on
-WARNING: This is a development server.
- * Running on http://127.0.0.1:5000
-Press CTRL+C to quit
-```
-
 ### Access the Application
 
-Open your browser and navigate to:
-
-```
-http://localhost:5000
-```
+| Route | Description |
+|-------|-------------|
+| `/` | Login page |
+| `/register-page` | New voter registration |
+| `/vote-page` | Cast your vote |
+| `/results-page` | Live election results |
+| `/dashboard` | Admin dashboard (admin role required) |
 
 ---
 
@@ -558,185 +474,15 @@ graph TD
     I -->|Yes| J[Behavioral Analysis]
     I -->|No| K[Access Denied]
     J --> L{Risk Score < 0.3?}
-    L -->|Yes| M[Dashboard Access]
+    L -->|Yes| M[Vote Page]
     L -->|No| K
-    M --> N[Navigate to Vote Page]
-    N --> O[Select Candidate]
-    O --> P[Confirm Vote]
-    P --> Q[Generate Blockchain Hash]
-    Q --> R[Vote Recorded]
-    R --> S[View Confirmation]
-    S --> T[Check Results Dashboard]
+    M --> N[Select Candidate]
+    N --> O[Confirm Vote]
+    O --> P[Generate Blockchain Hash]
+    P --> Q[Vote Recorded]
+    Q --> R[View Confirmation]
+    R --> S[Check Results Dashboard]
 ```
-
-### Detailed Steps
-
-#### **1. Registration** (`/register-page`)
-
-**Form Fields:**
-- Full Name (min 3 characters)
-- Email (validated format)
-- Password (8+ chars, uppercase, lowercase, number, special)
-- Confirm Password (must match)
-- Terms agreement checkbox
-
-**Face Capture:**
-1. Click "Register & Capture Face"
-2. Allow webcam access
-3. System captures face photo
-4. Face encoding extracted (128-dim vector)
-5. Stored in database + file system
-
-**Validation:**
-- Real-time password strength meter
-- Live confirmation match indicator
-- Email format validation
-- Face quality check
-
-**Security:**
-- Password hashed with bcrypt (12 rounds)
-- Face encoding encrypted
-- Session created after registration
-
----
-
-#### **2. Login** (`/login-page`)
-
-**Step 1: Enter Credentials**
-- Email address
-- Password
-
-**Step 2: Face Verification**
-- Webcam activates automatically
-- System captures current face
-- Compares with stored encoding
-- Calculates similarity (threshold: 0.6)
-
-**Step 3: Behavioral Analysis**
-- Tracks keystroke dynamics
-- Monitors mouse movements
-- Calculates risk score using Isolation Forest
-- Blocks if anomaly detected (score > 0.3)
-
-**Possible Outcomes:**
-- ✅ **Success:** Redirect to dashboard
-- ❌ **Face Mismatch:** "Identity verification failed"
-- ❌ **High Risk Score:** "Suspicious activity detected"
-- ❌ **Invalid Credentials:** "Email or password incorrect"
-
----
-
-#### **3. Dashboard** (`/dashboard`)
-
-**Overview Cards:**
-- Election status (Active/Completed)
-- Your vote status (Not Voted / Voted)
-- Time remaining
-- Total participants
-
-**Quick Actions:**
-- 🗳️ **Cast Vote** → Navigate to voting page
-- 📊 **View Results** → Check live results
-- 👤 **Profile** → Manage account
-- 🚪 **Logout** → End session
-
-**Security Indicators:**
-- Face match percentage (e.g., 98.5%)
-- Behavioral risk score (e.g., 0.12)
-- Last login time
-- Device info
-
----
-
-#### **4. Voting** (`/vote-page`)
-
-**Candidate Cards:**
-- Photo
-- Name
-- Party affiliation
-- Brief manifesto
-
-**Voting Process:**
-1. Review all candidates
-2. Click "Vote" on preferred candidate
-3. Confirmation modal appears
-4. Re-enter password for verification
-5. Click "Confirm Vote"
-
-**Backend Processing:**
-1. Verify user hasn't voted already
-2. Validate session
-3. Check behavioral score
-4. Record vote in database
-5. Generate SHA-256 audit hash
-6. Add block to blockchain
-7. Update vote count
-
-**Response:**
-- ✅ **Success:** Redirect to confirmation page
-- ❌ **Already Voted:** "You have already cast your vote"
-- ❌ **Session Expired:** "Please login again"
-
----
-
-#### **5. Confirmation** (`/confirmation`)
-
-**Display:**
-- ✅ Success animation
-- Vote timestamp
-- Blockchain audit hash (64 chars)
-- Security badges (RSA Encrypted, Hash Verified)
-- Countdown timer (5 seconds)
-
-**Auto Actions:**
-- Confetti animation
-- Auto-redirect to results page
-- Session remains active
-
----
-
-#### **6. Results** (`/results-page`)
-
-**Real-Time Data:**
-- **Vote Share Chart** (Donut)
-  - Candidate names + percentages
-  - Color-coded
-- **Voter Turnout Chart** (Donut)
-  - Voted vs Remaining
-- **Hourly Trend Chart** (Line)
-  - Votes per hour (9 AM - 5 PM)
-
-**Candidate Leaderboard:**
-- Sorted by vote count (descending)
-- 👑 Crown icon for winner
-- Percentage + total votes
-- Animated progress bars
-
-**Security Analytics:**
-- Login attempts: 312
-- Face mismatches blocked: 14
-- Behavioral anomalies: 7
-- Suspicious votes blocked: 3
-- Successful votes: 247
-
-**Blockchain Audit:**
-- Total blocks: 247
-- Last verified: 2 min ago
-- Latest hash displayed
-- Recent 5 blocks shown with:
-  - Block number
-  - Full SHA-256 hash
-  - Timestamp
-  - Verification checkmark
-
-**System Status:**
-- Face Recognition: ✅ Running
-- Behavioral Model: ✅ Running
-- MongoDB: ✅ Connected
-- RSA Encryption: ✅ Active
-- SHA-256 Audit: ✅ Validated
-- Flask Backend: ✅ Running
-- Double Vote Guard: ✅ Enabled
 
 ---
 
@@ -745,27 +491,18 @@ graph TD
 ### Face Recognition Pipeline
 
 ```python
-# 1. Registration - Extract face encoding
+# Registration — extract face encoding
 def register_face(image):
     face_locations = face_recognition.face_locations(image)
-    if len(face_locations) == 0:
-        return {"error": "No face detected"}
-    
     face_encoding = face_recognition.face_encodings(image, face_locations)[0]
     return face_encoding  # 128-dimensional vector
 
-# 2. Login - Compare faces
+# Login — compare faces
 def verify_face(stored_encoding, login_image):
-    face_locations = face_recognition.face_locations(login_image)
-    if len(face_locations) == 0:
-        return {"match": False, "reason": "No face detected"}
-    
-    current_encoding = face_recognition.face_encodings(login_image, face_locations)[0]
+    current_encoding = face_recognition.face_encodings(login_image)[0]
     distance = face_recognition.face_distance([stored_encoding], current_encoding)[0]
-    
-    match = distance < 0.6  # Tolerance threshold
+    match = distance < 0.6
     confidence = (1 - distance) * 100
-    
     return {"match": match, "confidence": confidence}
 ```
 
@@ -773,56 +510,28 @@ def verify_face(stored_encoding, login_image):
 
 ```python
 from sklearn.ensemble import IsolationForest
-import numpy as np
 
-# Training
-def train_behavior_model(normal_data):
-    model = IsolationForest(
-        contamination=0.1,  # 10% expected anomalies
-        random_state=42
-    )
+def train_model(normal_data):
+    model = IsolationForest(contamination=0.1, random_state=42)
     model.fit(normal_data)
     return model
 
-# Prediction
-def analyze_behavior(model, features):
-    # features = [avg_hold_time, avg_key_interval, avg_mouse_speed]
-    risk_score = model.decision_function([features])[0]
-    
-    # Normalize to 0-1 scale
-    normalized_score = 1 / (1 + np.exp(risk_score))
-    
-    if normalized_score > 0.3:
-        return {"anomaly": True, "score": normalized_score}
-    return {"anomaly": False, "score": normalized_score}
+def predict_sample(model, features):
+    score = model.decision_function([features])[0]
+    normalized = 1 / (1 + np.exp(score))
+    return (-1 if normalized > 0.3 else 1), normalized
 ```
 
 ### Blockchain Implementation
 
 ```python
-import hashlib
-import json
+import hashlib, json
 from datetime import datetime
 
 class VoteBlockchain:
-    def __init__(self):
-        self.chain = []
-        self.create_genesis_block()
-    
-    def create_genesis_block(self):
-        genesis = {
-            "block_id": 0,
-            "timestamp": datetime.now().isoformat(),
-            "data": "Genesis Block",
-            "prev_hash": "0" * 64
-        }
-        genesis["hash"] = self.calculate_hash(genesis)
-        self.chain.append(genesis)
-    
     def calculate_hash(self, block):
-        block_string = json.dumps(block, sort_keys=True)
-        return hashlib.sha256(block_string.encode()).hexdigest()
-    
+        return hashlib.sha256(json.dumps(block, sort_keys=True).encode()).hexdigest()
+
     def add_vote(self, vote_data):
         new_block = {
             "block_id": len(self.chain),
@@ -833,138 +542,56 @@ class VoteBlockchain:
         new_block["hash"] = self.calculate_hash(new_block)
         self.chain.append(new_block)
         return new_block
-    
-    def verify_chain(self):
-        for i in range(1, len(self.chain)):
-            current = self.chain[i]
-            previous = self.chain[i-1]
-            
-            # Check hash integrity
-            if current["hash"] != self.calculate_hash(current):
-                return False
-            
-            # Check chain linkage
-            if current["prev_hash"] != previous["hash"]:
-                return False
-        
-        return True
 ```
-
----
-
-## 📊 Demo Credentials
-
-### Test Accounts
-
-**Voter 1:**
-- Email: `alice@sentinelvote.ai`
-- Password: `SecurePass123!`
-- Status: Not voted
-
-**Voter 2:**
-- Email: `bob@sentinelvote.ai`
-- Password: `StrongVote456!`
-- Status: Already voted
-
-**Admin:**
-- Email: `admin@sentinelvote.ai`
-- Password: `Admin@2024`
-- Role: Election administrator
-
-**Note:** Face recognition will not work for demo accounts unless you register your own face.
-
-### Demo Candidates
-
-1. **Alice Johnson** - Progressive Party
-2. **Bob Smith** - Unity Alliance
-3. **Carol Davis** - Green Initiative
-
----
-
-## 🎥 Screenshots
-
-### Registration Page
-![Registration](docs/screenshots/register.png)
-*Secure registration with real-time validation and face capture*
-
-### Login with Face Verification
-![Login](docs/screenshots/login.png)
-*Multi-factor authentication with behavioral AI*
-
-### Dashboard
-![Dashboard](docs/screenshots/dashboard.png)
-*User dashboard with election status and quick actions*
-
-### Voting Interface
-![Voting](docs/screenshots/vote.png)
-*Clean, intuitive candidate selection*
-
-### Vote Confirmation
-![Confirmation](docs/screenshots/confirmation.png)
-*Blockchain-verified vote receipt with audit hash*
-
-### Live Results
-![Results](docs/screenshots/results.png)
-*Real-time analytics with security monitoring*
 
 ---
 
 ## 🧪 Testing
 
-### Run Unit Tests
+### Run Tests
 
 ```bash
 pytest tests/ -v
 ```
 
-### Test Coverage
-
-```bash
-pytest --cov=app tests/
-```
-
 ### Manual Testing Checklist
 
-- [ ] Registration with valid data
-- [ ] Registration with duplicate email (should fail)
+- [ ] Register a new voter with face capture
 - [ ] Login with correct credentials + matching face
-- [ ] Login with correct credentials + wrong face (should fail)
+- [ ] Login with wrong face (should fail)
 - [ ] Login with wrong password (should fail)
-- [ ] Vote casting (first time)
-- [ ] Double vote attempt (should be blocked)
-- [ ] Results page loads correctly
-- [ ] Charts render properly
-- [ ] Blockchain audit chain displays
-- [ ] Session timeout works (after 1 hour)
-- [ ] Logout clears session
+- [ ] Cast a vote successfully
+- [ ] Attempt double voting (should be blocked)
+- [ ] View live results and blockchain audit
+- [ ] Admin dashboard access with admin account
+- [ ] Session timeout after 1 hour
 
-### API Testing (Postman)
+### API Endpoints
 
-Import `docs/postman_collection.json` for pre-configured API tests.
-
-**Endpoints:**
-- `POST /register` - User registration
-- `POST /login` - User authentication
-- `GET /dashboard` - Retrieve user dashboard
-- `POST /cast-vote` - Submit vote
-- `GET /results` - Fetch election results
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/register` | Register new voter |
+| POST | `/login` | Authenticate voter |
+| GET | `/vote-page` | Load voting interface |
+| POST | `/cast-vote` | Submit vote |
+| GET | `/results-page` | Fetch live results |
+| GET | `/dashboard` | Admin dashboard |
+| GET | `/logout` | End session |
 
 ---
 
-## 🌐 Deployment
-
 ### Production Checklist
 
-- [ ] Change `SECRET_KEY` to cryptographically secure random string
-- [ ] Set `FLASK_ENV=production`
-- [ ] Use production MongoDB (MongoDB Atlas recommended)
-- [ ] Enable HTTPS (SSL certificate)
-- [ ] Configure firewall rules
-- [ ] Set up monitoring (Sentry, New Relic)
-- [ ] Enable logging (ELK stack)
-- [ ] Implement rate limiting
-- [ ] Configure CORS properly
-- [ ] Set up backup strategy
+- [ ] `SECRET_KEY` set to cryptographically secure random string
+- [ ] `FLASK_ENV=production`
+- [ ] MongoDB Atlas connected with valid URI
+- [ ] HTTPS enabled (SSL certificate)
+- [ ] Firewall rules configured
+- [ ] `seed_data.py` run against production database
+- [ ] Face encodings volume persisted (Docker)
+- [ ] Rate limiting active (Nginx config)
+
+---
 
 ## 🤝 Contributing
 
@@ -991,69 +618,27 @@ Import `docs/postman_collection.json` for pre-configured API tests.
 - 📱 Mobile app (React Native)
 - 🎨 UI/UX improvements
 - 🧪 More comprehensive tests
-- 📚 Documentation enhancements
 - 🚀 Performance optimizations
-
----
-
-## 📜 License
-
-This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
-
-```
-MIT License
-
-Copyright (c) 2024 SentinelVote AI Team
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction...
-```
 
 ---
 
 ## 👥 Team
 
-| Name | Role | GitHub | LinkedIn |
-|------|------|--------|----------|
-| **Ruchika Verma** | Full Stack + AI/ML | [Profile](https://www.linkedin.com/in/ruchika-verma-888bb6309 ) |
-| **Divyanshi Singh** | Backend |[Profile](https://linkedin.com/in/member2) |
-| **Archana Agahari** | Frontend + UI/UX |[Profile](https://linkedin.com/in/member3) |
-| **Rashmi** |Security| [Profile](https://linkedin.com/in/member3) 
+| Name | Role | LinkedIn |
+|------|------|----------|
+| **Ruchika Verma** | Full Stack + AI/ML | [Profile](https://www.linkedin.com/in/ruchika-verma-888bb6309) |
+| **Divyanshi Singh** | Backend | [Profile](https://linkedin.com/in/member2) |
+| **Archana Agahari** | Frontend + UI/UX | [Profile](https://linkedin.com/in/member3) |
+| **Rashmi** | Security | [Profile](https://linkedin.com/in/member4) |
 
-### Project Links
-
-- **GitHub Repo:** [https://github.com/RuchikaaVerma/SentinelVote-AI)
-- **Demo Video:** [YouTube Link](https://youtube.com/watch?v=demo)
-- **Pitch Deck:** [View Presentation](docs/SentinelVote_AI_Pitch.pdf)
-
-
-### What Makes Us Different
-
-| Feature | Traditional E-Voting | SentinelVote AI |
-|---------|---------------------|-----------------|
-| Authentication | Password only | Password + Face + Behavior |
-| Fraud Detection | Reactive (after voting) | Proactive (ML prediction) |
-| Audit Trail | Database logs | Blockchain (tamper-proof) |
-| Transparency | Black box | Open-source, verifiable |
-| Real-time Results | No | Yes (live dashboard) |
-
-### Achievements
-
-- ✅ **247 votes processed** in demo
-- ✅ **Zero fraudulent votes** passed security
-- ✅ **14 face mismatches** detected and blocked
-- ✅ **100% blockchain integrity** maintained
-- ✅ **98.5% face recognition accuracy**
-- ✅ **< 2 second** vote processing time
-
+---
 
 ## 🚀 Future Roadmap
 
 ### Phase 1
 - [ ] WebAuthn integration (passwordless login)
 - [ ] Mobile app (iOS + Android)
-- [ ] Multi-language support (10 languages)
+- [ ] Multi-language support
 - [ ] Accessibility features (WCAG 2.1 AA)
 
 ### Phase 2
@@ -1068,7 +653,7 @@ in the Software without restriction...
 - [ ] Integration with national ID systems
 - [ ] Pilot deployment in local government
 
-### Phase 4 
+### Phase 4
 - [ ] National-level deployment
 - [ ] Third-party security audit
 - [ ] Compliance certifications (ISO 27001)
@@ -1076,16 +661,6 @@ in the Software without restriction...
 
 ---
 
-
-## 📈 Statistics
-
-![GitHub stars](https://img.shields.io/github/stars/yourusername/sentinelvote-ai?style=social)
-![GitHub forks](https://img.shields.io/github/forks/yourusername/sentinelvote-ai?style=social)
-![GitHub issues](https://img.shields.io/github/issues/yourusername/sentinelvote-ai)
-![GitHub pull requests](https://img.shields.io/github/issues-pr/yourusername/sentinelvote-ai)
-![GitHub last commit](https://img.shields.io/github/last-commit/yourusername/sentinelvote-ai)
-
----
 
 <div align="center">
 
