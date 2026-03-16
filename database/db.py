@@ -1,6 +1,6 @@
 from pymongo import MongoClient
-from pymongo.server_api import ServerApi
 import os
+import certifi
 
 class MongoDB:
     db = None
@@ -14,12 +14,8 @@ def init_db(app):
     if "mongodb+srv" in uri:
         client = MongoClient(
             uri,
-            server_api=ServerApi('1'),
-            tlsAllowInvalidCertificates=True,
-            tlsAllowInvalidHostnames=True,
-            serverSelectionTimeoutMS=30000,
-            connectTimeoutMS=30000,
-            socketTimeoutMS=30000
+            tlsCAFile=certifi.where(),
+            serverSelectionTimeoutMS=30000
         )
     else:
         client = MongoClient(uri)
