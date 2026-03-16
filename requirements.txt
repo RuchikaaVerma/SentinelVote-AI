@@ -8,3 +8,4 @@ cryptography
 face_recognition
 opencv-python
 dlib-bin
+certifi
