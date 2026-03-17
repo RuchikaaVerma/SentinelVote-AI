@@ -7,5 +7,5 @@ scikit-learn
 cryptography
 face_recognition
 opencv-python
-dlib-bin
+dlib==19.24.6
 certifi
