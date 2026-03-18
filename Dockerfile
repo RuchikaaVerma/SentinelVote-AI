@@ -31,6 +31,4 @@ RUN pip install gunicorn
 
 # Copy all project files
 COPY . .
-
-# Run app using Gunicorn (Railway auto uses $PORT)
-CMD ["gunicorn", "--bind", "0.0.0.0:$PORT", "app:app"]
+CMD gunicorn --bind 0.0.0.0:$PORT app:app
