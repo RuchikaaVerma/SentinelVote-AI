@@ -1,8 +1,10 @@
+# Use lightweight Python image
 FROM python:3.11-slim
 
+# Set working directory
 WORKDIR /app
 
-# Install system dependencies (REQUIRED for dlib/face_recognition)
+# Install system dependencies (required for dlib/face_recognition)
 RUN apt-get update && apt-get install -y \
     build-essential \
     cmake \
@@ -15,18 +17,20 @@ RUN apt-get update && apt-get install -y \
 # Upgrade pip
 RUN pip install --upgrade pip
 
-# Install dlib (prebuilt)
+# Install prebuilt dlib (IMPORTANT)
 RUN pip install --no-cache-dir dlib-bin
 
-# Copy requirements
+# Copy requirements file
 COPY requirements.txt .
 
-# Install all dependencies
+# Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy project files
+# Install Gunicorn (production server)
+RUN pip install gunicorn
+
+# Copy all project files
 COPY . .
 
-EXPOSE 5000
-
-CMD ["python", "app.py"]
+# Run app using Gunicorn (Railway auto uses $PORT)
+CMD ["gunicorn", "--bind", "0.0.0.0:$PORT", "app:app"]

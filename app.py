@@ -1,13 +1,14 @@
 from dotenv import load_dotenv
 load_dotenv()
 
-from flask import Flask, render_template
+from flask import Flask, render_template, session, redirect, request
+from datetime import datetime
+
 from config import Config
 from database.db import init_db
 from routes.auth_routes import auth_bp
 from routes.vote_routes import vote_bp
 from routes.admin_routes import admin_bp
-from flask import session, redirect
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -18,9 +19,10 @@ init_db(app)
 app.register_blueprint(auth_bp)
 app.register_blueprint(vote_bp)
 app.register_blueprint(admin_bp)
-
-
-
+# ── Home Route (IMPORTANT) ───────────────────
+@app.route("/")
+def home():
+    return redirect("/login-page")
 # ── Auth Pages ───────────────────────────────
 @app.route("/register-page")
 def register_page():
@@ -33,7 +35,6 @@ def login_page():
 # ── Dashboard ────────────────────────────────
 @app.route("/dashboard")
 def dashboard():
-
     if "user_id" not in session:
         return redirect("/login-page")
 
@@ -42,20 +43,23 @@ def dashboard():
 
     return render_template("dashboard.html")
 
+# ── Confirmation ─────────────────────────────
 @app.route("/confirmation")
 def confirmation():
-    # Get data from session or query params
-    timestamp = request.args.get("timestamp", datetime.now().strftime("%d %b %Y, %H:%M:%S"))
-    audit_hash = request.args.get("hash", "abc123def456...")  # Replace with real hash
-    
+    timestamp = request.args.get(
+        "timestamp",
+        datetime.now().strftime("%d %b %Y, %H:%M:%S")
+    )
+    audit_hash = request.args.get("hash", "abc123def456...")
+
     return render_template(
         "confirmation.html",
         timestamp=timestamp,
         audit_hash=audit_hash
     )
 
-
 # ── Run App ──────────────────────────────────
+import os
+
 if __name__ == "__main__":
-    import os
-    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
