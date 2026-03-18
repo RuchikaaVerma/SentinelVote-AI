@@ -8,4 +8,4 @@ cryptography
 opencv-python
 certifi
 face-recognition-models
-face_recognition --no-deps
+face_recognition

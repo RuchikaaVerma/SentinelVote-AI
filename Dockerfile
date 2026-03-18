@@ -2,23 +2,31 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
+# Install system dependencies (REQUIRED for dlib/face_recognition)
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    cmake \
+    libopenblas-dev \
+    liblapack-dev \
+    libx11-dev \
+    libgtk-3-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Upgrade pip
 RUN pip install --upgrade pip
+
+# Install dlib (prebuilt)
 RUN pip install --no-cache-dir dlib-bin
-RUN pip install --no-cache-dir face-recognition-models
-RUN pip install --no-cache-dir face_recognition --no-deps
 
+# Copy requirements
 COPY requirements.txt .
-RUN pip install --no-cache-dir \
-    flask \
-    flask-pymongo \
-    bcrypt \
-    python-dotenv \
-    numpy \
-    scikit-learn \
-    cryptography \
-    opencv-python \
-    certifi
 
+# Install all dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy project files
 COPY . .
+
 EXPOSE 5000
+
 CMD ["python", "app.py"]
