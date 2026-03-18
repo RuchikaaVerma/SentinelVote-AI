@@ -19,10 +19,10 @@ init_db(app)
 app.register_blueprint(auth_bp)
 app.register_blueprint(vote_bp)
 app.register_blueprint(admin_bp)
-# ── Home Route (IMPORTANT) ───────────────────
+
 @app.route("/")
 def home():
-    return redirect("/login-page")
+    return "App is LIVE 🚀"
 # ── Auth Pages ───────────────────────────────
 @app.route("/register-page")
 def register_page():
