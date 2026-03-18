@@ -5,6 +5,7 @@ python-dotenv
 numpy
 scikit-learn
 cryptography
-face_recognition
 opencv-python
 certifi
+face-recognition-models
+face_recognition --no-deps
