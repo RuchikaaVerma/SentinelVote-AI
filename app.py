@@ -3,6 +3,7 @@ load_dotenv()
 
 from flask import Flask, render_template, session, redirect, request
 from datetime import datetime
+import os
 
 from config import Config
 from database.db import init_db
@@ -20,9 +21,11 @@ app.register_blueprint(auth_bp)
 app.register_blueprint(vote_bp)
 app.register_blueprint(admin_bp)
 
+# ✅ ONLY ONE HOME ROUTE
 @app.route("/")
 def home():
-    return "App is LIVE 🚀"
+    return redirect("/login-page")
+
 # ── Auth Pages ───────────────────────────────
 @app.route("/register-page")
 def register_page():
@@ -59,7 +62,5 @@ def confirmation():
     )
 
 # ── Run App ──────────────────────────────────
-import os
-
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
