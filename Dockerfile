@@ -1,21 +1,25 @@
 FROM python:3.11-slim
 
+# Only runtime libs needed — no build tools
 RUN apt-get update && apt-get install -y \
-    build-essential cmake \
-    libopenblas-dev liblapack-dev \
-    libx11-dev libgtk-3-dev \
-    libssl-dev libffi-dev \
+    libopenblas0 \
+    liblapack3 \
+    libx11-6 \
+    libglib2.0-0 \
+    libgl1 \
     ca-certificates \
     && update-ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
-# Install dlib separately first (speeds up layer caching)
-RUN pip install --upgrade pip
-RUN pip install dlib==19.24.6
-
 WORKDIR /app
+
+# Install dlib-bin FIRST (precompiled, no cmake, no RAM spike)
+RUN pip install --upgrade pip
+RUN pip install --no-cache-dir dlib-bin
+
+# Install rest of dependencies
 COPY requirements.txt .
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 EXPOSE 5000
