@@ -9,7 +9,7 @@
 [![dlib](https://img.shields.io/badge/dlib-19.24-orange.svg)](http://dlib.net/)
 [![scikit-learn](https://img.shields.io/badge/scikit--learn-1.3.0-red.svg)](https://scikit-learn.org/)
 
-**[▶️ Watch Demo](https://drive.google.com/file/d/1Y-2H1yvLYgqMUU-CQWmSPDcPJX9LZdVR/view?usp=sharing) · [📂 GitHub Repo](https://github.com/RuchikaaVerma/SentinelVote-AI) ·
+**[▶️ Watch Demo](https://drive.google.com/file/d/1_CgyXHfT_jjlcqKMHMJHmdpZV6EAGoWX/view?usp=sharingg) · [📂 GitHub Repo](https://github.com/RuchikaaVerma/SentinelVote-AI) ·
 
 ---
 
